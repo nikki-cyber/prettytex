@@ -1,0 +1,143 @@
+%Compiled with LuaLaTeX
+
+\documentclass[12pt]{article}
+\usepackage[top=3.5cm, bottom=3.5cm, outer=3.33cm, inner=3.33cm]{geometry}
+\usepackage{background}
+\usepackage{lipsum}
+\usepackage{setspace}
+\linespread{1.3}
+\usepackage{fontspec}
+\usepackage[T1]{fontenc}
+\usepackage{ebgaramond}
+\usetikzlibrary{shapes.geometric,calc}
+\usepackage{tikz}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{float}
+
+\backgroundsetup{
+scale=1,
+color=black,
+opacity=.9,
+angle=0,
+contents={%
+  \begin{tikzpicture}[remember picture,overlay] 
+\fill[pink] (current page.south west) rectangle ( $ (current page.north west) + (2cm,0) $);
+\fill[pink] (current page.south east) rectangle ( $ (current page.north east) + (-2cm,0) $);
+\fill[pink] (current page.north west) rectangle ( $ (current page.north east) + (0,-2cm) $);
+\fill[pink] (current page.south west) rectangle ( $ (current page.south east) + (0,2cm) $);
+\node at (-8.1,11.3) {\pgfornament[width=5cm]{131}};
+\node at (-8.1,-11.3){\pgfornament[width=5cm,symmetry=h]{131}};
+\node at (8.1,11.3) {\pgfornament[width=5cm]{132}};
+\node at (8.1,-11.3){\pgfornament[width=5cm,symmetry=h]{132}};
+\node at (0,13){\pgfornament[width=11cm]{84}};
+\node at (0,-13){\pgfornament[width=11cm]{84}};
+%
+\node at (9.8,0){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,1.9){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,3.8){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,5.7){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,7.6){\pgfornament[width=1.3cm]{7}};
+%
+\node at (9.8,-1.9){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,-3.8){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,-5.7){\pgfornament[width=1.3cm]{7}};
+\node at (9.8,-7.6){\pgfornament[width=1.3cm]{7}};
+%
+\node at (-9.8,0){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,1.9){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,3.8){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,5.7){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,7.6){\pgfornament[width=1.3cm]{7}};
+%
+\node at (-9.8,-1.9){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,-3.8){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,-5.7){\pgfornament[width=1.3cm]{7}};
+\node at (-9.8,-7.6){\pgfornament[width=1.3cm]{7}};
+\end{tikzpicture}
+  }%
+}
+
+\pagecolor{pink!40!}
+%\color{black!70!green}
+
+\begin{document}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+  \node[inner sep=6pt] (text) {\Huge Random Walks};
+  \node[anchor=north] at (text.south) {\pgfornament[width=7cm]{75}};
+  \node[anchor=south] at (text.north){\pgfornament[width=7cm,symmetry=h]{75}};
+  \end{tikzpicture} 
+\end{figure}
+
+\section{Free Particle}
+
+A free particle (i.e. no potential) wave function $\psi(x,t)$  is given by the solution to the Schrodinger Equation:
+
+\begin{equation}
+\label{freeparticleschro}
+   % i\hbar\frac{\partial \psi}{\partial t}=-\frac{\hbar^2}{2m}\frac{\partial^2 \psi}{\partial x^2}\\
+    %alt notation"
+    i\hbar\partial_t\psi=-\frac{\hbar^2}{2m}\partial_x^2\psi
+\end{equation}
+where the solution
+\begin{equation}
+\label{freeparticlesol}
+    \psi(x,t)=\sqrt{\frac{m}{i2\pi\hbar(t-t_0)}}\exp\bigg[\frac{im(x-x_0)^2}{2\hbar(t-t_0)}\bigg]
+\end{equation}
+is known as the propagator, which propagates the initial condition $\psi(x,t_0)=\delta(x-x_0)$ through time t. \\
+\\
+We can make replacements that provide new constants, but do not transform the structure of the equation. We will choose $t\rightarrow-it$ and $\hbar\rightarrow m$. These replacements into Eq. \ref{freeparticleschro} return the diffusion equation: 
+\begin{equation}
+\label{diffusioneq}
+    \partial_t\psi=\frac{1}{2}\partial^2_x\psi.
+\end{equation}
+Because we have only exchanged constants, the solution is given by Eq. \ref{freeparticlesol} with the same replacement of constants:
+\begin{equation}
+\label{diffusionsol}
+    \psi(x,t)=\frac{1}{\sqrt{2\pi(t-t_0)}}e^{-\frac{\ (x-x_0)^2}{2(t-t_0)}}
+\end{equation}
+which we recognize as a Gaussian with standard deviation $\sigma(t)=\sqrt{(t-t_0)}$, causing spread over time (physical solutions require $t>t_0$).
+
+The solution Eq. \ref{diffusionsol} can be taken as the definition of Brownian motion, and when appropriately normalized, acts as a probability distribution for diffusing particles. 
+
+\subsection{Wall Potential}
+
+The wall potential at $V(x)>0$ for $x<0$ allows us to find out the likelihood of a particle crossing the origin (starting at $x_0>0$), and the time it will take to do so. 
+
+This requires us to set up the Schr{\"o}dinger equation with the new potential:
+
+\begin{equation}
+i\hbar\partial_t\psi=-\frac{\hbar^2}{2m}\partial_x^2\psi+V(x)\psi.
+\end{equation}
+
+Making the replacement $\hbar \rightarrow m$ and the imaginary time replacement $t \rightarrow -it$ as before:
+
+\begin{equation}
+\partial_t\psi = \frac{1}{2}\partial_x^2\psi + \frac{1}{m}V(x)\psi
+\end{equation}
+
+which is an equation of damped diffusion, where when $V(x)=0$. Particles in the region $x<0$ will decay exponentially at a rate $V(x)/m$.
+
+\subsection{Infinite Wall Boundary}
+
+We can choose this potential wall to be infinite in the specified region. This allows us to track the particles that cross because they are removed from the ensemble by this perfect absorber potential. This is analogous to quantum mechanics particle with an infinite wall potential. The easiest way to solve this Dirichlet Boundary Condition by the method of images. That is, using the PDE solution method of superposing solutions for a given boundary condition. The method states that if we have the solution $\psi(x,)$ that solves the diffusion equation with no potential (Eq. \ref{diffusioneq}), then
+
+\begin{equation}
+\check{\psi}(x,t) := \psi(x,t)-\psi(-x,t)
+\end{equation}
+
+solves the our new diffusion equation with the boundary condition imposed by the potential. Using our previous solution (Eq. \ref{diffusionsol}), starting at $x_0=d$ and $t_0=0$, our solution takes the form:
+
+\begin{equation}
+\label{newsol}
+\check{\psi}(x,t) = \frac{1}{\sqrt{2\pi}}\Big(e^{-(x-d)^2/2t}-e^{-(x+d)^2/2t}\Big).
+\end{equation}
+
+Because this solution (not its norm) acts as a probability distribution, we can can find the survival probability as a function of time by integrating Eq. \ref{newsol} over the region $x\in[0,\infty)$. The result of integration gives us some function (in terms of the error function?) of survival as a function of time.
+
+
+
+Suppose there is some function $f_{\tau_d}(x)$ that is the probability density of $\tau_d$ being time the walker crosses the origin. To find out the probability that some time interval up to time $t$ contains $\tau_d$, we can integrate $f_{\tau_d}(x)$ (where $x$ is a dummy variable) from 0 to $t$. Note that this is gives us the probability, as a function of time, that the walker has crossed the origin at time $t$, which we can call $P_{cross}(t)$. With these relations, we can compute $f_{\tau_d}(x)$.
+\end{document}
